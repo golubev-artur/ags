@@ -31,7 +31,16 @@ export function formatPhone(raw: string) {
 type Errors = Partial<Record<"name" | "phone" | "age" | "direction" | "time" | "consent", string>>;
 
 export function TrialForm() {
-  const [f, setF] = useState({ name: "", phone: "", age: "", adult: false, direction: "", time: "", comment: "", consent: false });
+  const [f, setF] = useState({
+    name: "",
+    phone: "",
+    age: "",
+    adult: false,
+    direction: "",
+    time: "",
+    comment: "",
+    consent: false,
+  });
   const [errors, setErrors] = useState<Errors>({});
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
@@ -67,12 +76,19 @@ export function TrialForm() {
     setDone(true);
   }
 
-  const err = (k: keyof Errors) => errors[k] && <p className="mt-1.5 text-sm text-destructive">{errors[k]}</p>;
+  const err = (k: keyof Errors) =>
+    errors[k] && <p className="mt-1.5 text-sm text-destructive">{errors[k]}</p>;
 
   return (
     <AnimatePresence mode="wait">
       {done ? (
-        <motion.div key="ok" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} className="py-16 text-center">
+        <motion.div
+          key="ok"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="py-16 text-center"
+        >
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-mint">
             <Check className="h-9 w-9" strokeWidth={1.5} />
           </div>
@@ -80,45 +96,107 @@ export function TrialForm() {
           <p className="mt-3 text-muted-foreground">Мы свяжемся с вами в течение дня</p>
         </motion.div>
       ) : (
-        <motion.form key="form" exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }} onSubmit={submit} noValidate className="grid gap-5 sm:grid-cols-2">
+        <motion.form
+          key="form"
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.4 }}
+          onSubmit={submit}
+          noValidate
+          className="grid gap-5 sm:grid-cols-2"
+        >
           <div>
-            <input className="field" placeholder="Имя *" value={f.name} maxLength={100} onChange={(e) => set("name", e.target.value)} />
+            <input
+              className="field"
+              placeholder="Имя *"
+              value={f.name}
+              maxLength={100}
+              onChange={(e) => set("name", e.target.value)}
+            />
             {err("name")}
           </div>
           <div>
-            <input className="field" type="tel" inputMode="tel" placeholder="+7 (___) ___-__-__ *" value={f.phone} onFocus={() => !f.phone && set("phone", "+7")} onChange={(e) => set("phone", formatPhone(e.target.value))} />
+            <input
+              className="field"
+              type="tel"
+              inputMode="tel"
+              placeholder="+7 (___) ___-__-__ *"
+              value={f.phone}
+              onFocus={() => !f.phone && set("phone", "+7")}
+              onChange={(e) => set("phone", formatPhone(e.target.value))}
+            />
             {err("phone")}
           </div>
           <div>
-            <input className="field disabled:opacity-50" placeholder="Возраст ребёнка *" value={f.age} disabled={f.adult} maxLength={20} onChange={(e) => set("age", e.target.value)} />
+            <input
+              className="field disabled:opacity-50"
+              placeholder="Возраст ребёнка *"
+              value={f.age}
+              disabled={f.adult}
+              maxLength={20}
+              onChange={(e) => set("age", e.target.value)}
+            />
             <label className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-              <input type="checkbox" checked={f.adult} onChange={(e) => set("adult", e.target.checked)} className="accent-foreground" /> я взрослый
+              <input
+                type="checkbox"
+                checked={f.adult}
+                onChange={(e) => set("adult", e.target.checked)}
+                className="accent-foreground"
+              />{" "}
+              я взрослый
             </label>
             {err("age")}
           </div>
           <div>
-            <select className="field" value={f.direction} onChange={(e) => set("direction", e.target.value)}>
+            <select
+              className="field"
+              value={f.direction}
+              onChange={(e) => set("direction", e.target.value)}
+            >
               <option value="">Направление *</option>
-              {DIRECTIONS.map((d) => <option key={d}>{d}</option>)}
+              {DIRECTIONS.map((d) => (
+                <option key={d}>{d}</option>
+              ))}
             </select>
             {err("direction")}
           </div>
           <div className="sm:col-span-2">
             <select className="field" value={f.time} onChange={(e) => set("time", e.target.value)}>
               <option value="">Удобное время *</option>
-              {TIMES.map((d) => <option key={d}>{d}</option>)}
+              {TIMES.map((d) => (
+                <option key={d}>{d}</option>
+              ))}
             </select>
             {err("time")}
           </div>
-          <textarea className="field sm:col-span-2 min-h-28" placeholder="Комментарий" maxLength={1000} value={f.comment} onChange={(e) => set("comment", e.target.value)} />
+          <textarea
+            className="field sm:col-span-2 min-h-28"
+            placeholder="Комментарий"
+            maxLength={1000}
+            value={f.comment}
+            onChange={(e) => set("comment", e.target.value)}
+          />
           <div className="sm:col-span-2">
             <label className="flex items-start gap-3 text-sm text-muted-foreground">
-              <input type="checkbox" checked={f.consent} onChange={(e) => set("consent", e.target.checked)} className="mt-1 accent-foreground" />
-              <span>Я согласен(на) на обработку персональных данных в соответствии с <Link to="/privacy" className="underline">политикой конфиденциальности</Link></span>
+              <input
+                type="checkbox"
+                checked={f.consent}
+                onChange={(e) => set("consent", e.target.checked)}
+                className="mt-1 accent-foreground"
+              />
+              <span>
+                Я согласен(на) на обработку персональных данных в соответствии с{" "}
+                <Link to="/privacy" className="underline">
+                  политикой конфиденциальности
+                </Link>
+              </span>
             </label>
             {err("consent")}
           </div>
-          <button type="submit" disabled={sending} className="btn-mint sm:col-span-2 w-full disabled:opacity-60">
+          <button
+            type="submit"
+            disabled={sending}
+            className="btn-mint sm:col-span-2 w-full disabled:opacity-60"
+          >
             {sending ? "Отправляем…" : "Записаться"}
           </button>
         </motion.form>
