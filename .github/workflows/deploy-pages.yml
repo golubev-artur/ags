@@ -26,9 +26,9 @@ jobs:
       - run: bun run build
         env:
           PAGES_BASE: /${{ github.event.repository.name }}/
+      # Pages включается один раз вручную: Settings → Pages → Source: GitHub Actions
+      # (токен workflow не имеет права создать сайт Pages сам).
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/client
