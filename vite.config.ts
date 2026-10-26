@@ -6,10 +6,26 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig({
-  tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
-  },
-});
+// Статическая сборка для GitHub Pages (.github/workflows/deploy-pages.yml).
+// Включается только переменной PAGES_BASE (например "/ags/"), поэтому сборку
+// и публикацию в Lovable не затрагивает.
+const pagesBase = process.env.PAGES_BASE;
+
+export default defineConfig(
+  pagesBase
+    ? {
+        vite: { base: pagesBase },
+        nitro: false,
+        tanstackStart: {
+          server: { entry: "server" },
+          prerender: { enabled: true, crawlLinks: true },
+        },
+      }
+    : {
+        tanstackStart: {
+          // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
+          // nitro/vite builds from this
+          server: { entry: "server" },
+        },
+      },
+);
