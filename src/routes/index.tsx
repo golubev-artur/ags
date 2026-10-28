@@ -9,7 +9,7 @@ import hero from "@/assets/hero.jpg";
 import studio from "@/assets/studio.jpg";
 import stage from "@/assets/stage.jpg";
 import { TrialForm } from "@/components/TrialForm";
-import { SocialIcons, VkLink } from "@/components/SocialIcons";
+import { SocialIcons, VkLink, VkMark } from "@/components/SocialIcons";
 import { COACHES, SOCIAL } from "@/lib/coaches";
 
 export const Route = createFileRoute("/")({
