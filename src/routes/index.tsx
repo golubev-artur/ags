@@ -9,8 +9,8 @@ import hero from "@/assets/hero.jpg";
 import studio from "@/assets/studio.jpg";
 import stage from "@/assets/stage.jpg";
 import { TrialForm } from "@/components/TrialForm";
-import { SocialIcons } from "@/components/SocialIcons";
-import { COACHES } from "@/lib/coaches";
+import { SocialIcons, VkLink, VkMark } from "@/components/SocialIcons";
+import { COACHES, SOCIAL } from "@/lib/coaches";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -109,18 +109,25 @@ function Index() {
   return (
     <div className="overflow-x-clip">
       {/* NAV */}
-      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || open ? "bg-card/80 backdrop-blur-xl shadow-soft" : ""}`}>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${open ? "bg-card shadow-soft" : scrolled ? "bg-card/80 backdrop-blur-xl shadow-soft" : ""}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#top" className="font-display text-3xl tracking-wide">AirGS</a>
           <nav className="hidden gap-8 text-sm lg:flex">
             {NAV.map(([l, h]) => <a key={h} href={h} className="text-muted-foreground transition-colors hover:text-foreground">{l}</a>)}
           </nav>
-          <a href="#signup" className="btn-mint hidden !py-2.5 text-sm lg:inline-flex">Пробное занятие</a>
+          <div className="hidden items-center gap-5 lg:flex">
+            <VkLink className="h-8 w-8" button={false} />
+            <a href="#signup" className="btn-mint !py-2.5 text-sm">Пробное занятие</a>
+          </div>
           <button className="lg:hidden" aria-label="Меню" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
         </div>
         {open && (
           <nav className="flex flex-col gap-4 px-6 pb-6 lg:hidden">
             {NAV.map(([l, h]) => <a key={h} href={h} onClick={() => setOpen(false)}>{l}</a>)}
+            <a href={SOCIAL.vk} target="_blank" rel="noreferrer" className="flex items-center gap-3 pt-2">
+              <VkMark className="h-8 w-8" />
+              <span>Мы во ВКонтакте</span>
+            </a>
           </nav>
         )}
       </header>
@@ -300,6 +307,10 @@ function Index() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
           <span className="font-display text-3xl text-foreground">AirGS</span>
           <span>Балашиха, ул. Заречная, 44 · <a href="tel:89680139060">8 (968) 013-90-60</a></span>
+          <a href={SOCIAL.vk} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-foreground">
+            <VkMark className="h-6 w-6" />
+            <span className="underline">ВКонтакте</span>
+          </a>
           <a href="/privacy" className="underline">Политика конфиденциальности</a>
           <span>© {new Date().getFullYear()} AirGS</span>
         </div>
