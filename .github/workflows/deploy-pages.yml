@@ -26,6 +26,8 @@ jobs:
       - run: bun run build
         env:
           PAGES_BASE: /${{ github.event.repository.name }}/
+      # Фото тренеров хранит Lovable: подтягиваем их в сборку (хост - превью проекта).
+      - run: node scripts/fetch-lovable-assets.mjs dist/client id-preview--0e4a8802-599b-4a6a-9bb9-5189a9e88758.lovable.app
       # Pages включается один раз вручную: Settings → Pages → Source: GitHub Actions
       # (токен workflow не имеет права создать сайт Pages сам).
       - uses: actions/configure-pages@v5

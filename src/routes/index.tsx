@@ -23,6 +23,8 @@ import hero from "@/assets/hero.jpg";
 import studio from "@/assets/studio.jpg";
 import stage from "@/assets/stage.jpg";
 import { TrialForm } from "@/components/TrialForm";
+import { SocialIcons, VkLink, VkMark } from "@/components/SocialIcons";
+import { COACHES, SOCIAL } from "@/lib/coaches";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -120,20 +122,6 @@ const why = [
   { icon: Sparkles, t: "Выступления и фестивали", d: "Сцена, костюмы и награды" },
 ];
 
-const coaches = [
-  { n: "Анна Соколова", r: "Полотна и кольцо", q: "Воздух учит доверять себе — это главный трюк." },
-  {
-    n: "Мария Ветрова",
-    r: "Гамак, детские группы",
-    q: "Малыши летают смелее всех — нужно лишь подхватить.",
-  },
-  {
-    n: "Екатерина Лебедева",
-    r: "Трапеция и растяжка",
-    q: "Сила и мягкость — не противоположности.",
-  },
-];
-
 const awards = [
   { t: "Fly Dance Star", c: "Москва" },
   { t: "Polygon International", c: "Красногорск" },
@@ -192,7 +180,7 @@ function Index() {
     <div className="overflow-x-clip">
       {/* NAV */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || open ? "bg-card/80 backdrop-blur-xl shadow-soft" : ""}`}
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${open ? "bg-card shadow-soft" : scrolled ? "bg-card/80 backdrop-blur-xl shadow-soft" : ""}`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#top" className="font-display text-3xl tracking-wide">
@@ -209,9 +197,12 @@ function Index() {
               </a>
             ))}
           </nav>
-          <a href="#signup" className="btn-mint hidden !py-2.5 text-sm lg:inline-flex">
-            Пробное занятие
-          </a>
+          <div className="hidden items-center gap-5 lg:flex">
+            <VkLink className="h-8 w-8" button={false} />
+            <a href="#signup" className="btn-mint !py-2.5 text-sm">
+              Пробное занятие
+            </a>
+          </div>
           <button className="lg:hidden" aria-label="Меню" onClick={() => setOpen(!open)}>
             {open ? <X /> : <Menu />}
           </button>
@@ -223,6 +214,15 @@ function Index() {
                 {l}
               </a>
             ))}
+            <a
+              href={SOCIAL.vk}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3 pt-2"
+            >
+              <VkMark className="h-8 w-8" />
+              <span>Мы во ВКонтакте</span>
+            </a>
           </nav>
         )}
       </header>
@@ -343,24 +343,30 @@ function Index() {
       {/* COACHES */}
       <section id="coaches" className="mx-auto max-w-7xl px-6 py-20 md:py-[120px]">
         <SectionTitle eyebrow="Тренеры" title="Те, кто научит летать" />
-        <div className="grid gap-6 md:grid-cols-3">
-          {coaches.map((c, i) => (
-            <FadeUp key={c.n} delay={i * 0.08}>
-              <div className="card-soft h-full bg-card p-10 text-center">
-                <div
-                  className={`mx-auto flex h-36 w-36 items-center justify-center rounded-full font-display text-5xl ${pastel[i]}`}
-                >
-                  {c.n
-                    .split(" ")
-                    .map((x) => x[0])
-                    .join("")}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {COACHES.map((c, i) => (
+            <FadeUp key={c.slug} delay={i * 0.08}>
+              <Link
+                to="/coaches/$slug"
+                params={{ slug: c.slug }}
+                className="card-soft group block h-full overflow-hidden bg-card"
+              >
+                <img
+                  src={c.photo}
+                  alt={c.name}
+                  loading="lazy"
+                  width={960}
+                  height={1280}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="p-6">
+                  <h3 className="text-2xl leading-tight">{c.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{c.short}</p>
+                  <span className="mt-4 inline-block text-sm underline underline-offset-4">
+                    Подробнее о тренере
+                  </span>
                 </div>
-                <h3 className="mt-6 text-3xl">{c.n}</h3>
-                <p className="mt-1 text-sm uppercase tracking-widest text-muted-foreground">
-                  {c.r}
-                </p>
-                <p className="mt-5 font-display text-xl italic">«{c.q}»</p>
-              </div>
+              </Link>
             </FadeUp>
           ))}
         </div>
@@ -438,24 +444,7 @@ function Index() {
               >
                 <Phone className="mt-1 h-5 w-5" strokeWidth={1.5} /> 8 (968) 013-90-60
               </a>
-              <div className="flex gap-3">
-                <a
-                  href="https://vk.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-ghost !py-2 text-sm"
-                >
-                  ВКонтакте
-                </a>
-                <a
-                  href="https://max.ru"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-ghost !py-2 text-sm"
-                >
-                  МАКС
-                </a>
-              </div>
+              <SocialIcons />
               <div className="rounded-[20px] bg-powder p-6">
                 <h3 className="flex items-center gap-2 text-2xl">
                   <Bus className="h-5 w-5" strokeWidth={1.5} /> Как добраться
@@ -503,6 +492,15 @@ function Index() {
           <span>
             Балашиха, ул. Заречная, 44 · <a href="tel:89680139060">8 (968) 013-90-60</a>
           </span>
+          <a
+            href={SOCIAL.vk}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 hover:text-foreground"
+          >
+            <VkMark className="h-6 w-6" />
+            <span className="underline">ВКонтакте</span>
+          </a>
           <Link to="/privacy" className="underline">
             Политика конфиденциальности
           </Link>
