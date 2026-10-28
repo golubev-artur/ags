@@ -115,12 +115,19 @@ function Index() {
           <nav className="hidden gap-8 text-sm lg:flex">
             {NAV.map(([l, h]) => <a key={h} href={h} className="text-muted-foreground transition-colors hover:text-foreground">{l}</a>)}
           </nav>
-          <a href="#signup" className="btn-mint hidden !py-2.5 text-sm lg:inline-flex">Пробное занятие</a>
+          <div className="hidden items-center gap-5 lg:flex">
+            <VkLink className="h-8 w-8" button={false} />
+            <a href="#signup" className="btn-mint !py-2.5 text-sm">Пробное занятие</a>
+          </div>
           <button className="lg:hidden" aria-label="Меню" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
         </div>
         {open && (
           <nav className="flex flex-col gap-4 px-6 pb-6 lg:hidden">
             {NAV.map(([l, h]) => <a key={h} href={h} onClick={() => setOpen(false)}>{l}</a>)}
+            <a href={SOCIAL.vk} target="_blank" rel="noreferrer" className="flex items-center gap-3 pt-2">
+              <VkMark className="h-8 w-8" />
+              <span>Мы во ВКонтакте</span>
+            </a>
           </nav>
         )}
       </header>
