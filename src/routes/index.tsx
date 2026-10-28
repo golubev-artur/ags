@@ -23,7 +23,7 @@ import hero from "@/assets/hero.jpg";
 import studio from "@/assets/studio.jpg";
 import stage from "@/assets/stage.jpg";
 import { TrialForm } from "@/components/TrialForm";
-import { SocialIcons, VkLink, VkMark } from "@/components/SocialIcons";
+import { MaxLink, MaxMark, SocialIcons, VkLink, VkMark } from "@/components/SocialIcons";
 import { COACHES, SOCIAL } from "@/lib/coaches";
 
 export const Route = createFileRoute("/")({
@@ -198,6 +198,7 @@ function Index() {
             ))}
           </nav>
           <div className="hidden items-center gap-5 lg:flex">
+            <MaxLink className="h-8 w-8" button={false} />
             <VkLink className="h-8 w-8" button={false} />
             <a href="#signup" className="btn-mint !py-2.5 text-sm">
               Пробное занятие
@@ -222,6 +223,15 @@ function Index() {
             >
               <VkMark className="h-8 w-8" />
               <span>Мы во ВКонтакте</span>
+            </a>
+            <a
+              href={SOCIAL.max}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3"
+            >
+              <MaxMark className="h-8 w-8" />
+              <span>Мы в МАКС</span>
             </a>
           </nav>
         )}

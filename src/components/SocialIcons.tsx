@@ -15,6 +15,52 @@ export function VkMark({ className = "h-7 w-7" }: { className?: string }) {
   );
 }
 
+export function MaxMark({ className = "h-7 w-7" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden>
+      <defs>
+        <linearGradient id="maxg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#4CC3FF" />
+          <stop offset="0.5" stopColor="#5B5BFF" />
+          <stop offset="1" stopColor="#A445F5" />
+        </linearGradient>
+      </defs>
+      <rect width="48" height="48" rx="14" fill="url(#maxg)" />
+      <path
+        d="M24 11c-7.3 0-13 5.4-13 12.6 0 3.4 1.2 6.7 2.6 9 .5.9.2 3.6-.6 5.6 2.1.2 4.9-.7 6-1.6 1.6.6 3.3 1 5 1 7.3 0 13-5.6 13-12.8S31.3 11 24 11Zm0 19.6a6.8 6.8 0 1 1 0-13.6 6.8 6.8 0 0 1 0 13.6Z"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
+export function MaxLink({
+  className = "h-7 w-7",
+  button = true,
+}: {
+  className?: string;
+  button?: boolean;
+}) {
+  if (!button) {
+    return (
+      <a
+        href={SOCIAL.max}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="МАКС"
+        className="transition-opacity hover:opacity-70"
+      >
+        <MaxMark className={className} />
+      </a>
+    );
+  }
+  return (
+    <a href={SOCIAL.max} target="_blank" rel="noreferrer" aria-label="МАКС" className={cls}>
+      <MaxMark className={className} />
+    </a>
+  );
+}
+
 export function VkLink({
   className = "h-7 w-7",
   button = true,
@@ -45,22 +91,7 @@ export function VkLink({
 export function SocialIcons() {
   return (
     <div className="flex gap-3">
-      <a href={SOCIAL.max} target="_blank" rel="noreferrer" aria-label="МАКС" className={cls}>
-        <svg viewBox="0 0 48 48" className="h-7 w-7" aria-hidden>
-          <defs>
-            <linearGradient id="maxg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#4CC3FF" />
-              <stop offset="0.5" stopColor="#5B5BFF" />
-              <stop offset="1" stopColor="#A445F5" />
-            </linearGradient>
-          </defs>
-          <rect width="48" height="48" rx="14" fill="url(#maxg)" />
-          <path
-            d="M24 11c-7.3 0-13 5.4-13 12.6 0 3.4 1.2 6.7 2.6 9 .5.9.2 3.6-.6 5.6 2.1.2 4.9-.7 6-1.6 1.6.6 3.3 1 5 1 7.3 0 13-5.6 13-12.8S31.3 11 24 11Zm0 19.6a6.8 6.8 0 1 1 0-13.6 6.8 6.8 0 0 1 0 13.6Z"
-            fill="#fff"
-          />
-        </svg>
-      </a>
+      <MaxLink className="h-7 w-7" />
       <VkLink className="h-7 w-7" />
       <a
         href={SOCIAL.whatsapp}
