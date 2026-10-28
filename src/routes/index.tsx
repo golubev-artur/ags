@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
@@ -9,6 +9,8 @@ import hero from "@/assets/hero.jpg";
 import studio from "@/assets/studio.jpg";
 import stage from "@/assets/stage.jpg";
 import { TrialForm } from "@/components/TrialForm";
+import { SocialIcons } from "@/components/SocialIcons";
+import { COACHES } from "@/lib/coaches";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -69,12 +71,6 @@ const why = [
   { icon: ShieldCheck, t: "Безопасность и страховка", d: "Маты, сертифицированное оборудование" },
   { icon: Users, t: "Малые группы до 8 человек", d: "Внимание каждому ученику" },
   { icon: Sparkles, t: "Выступления и фестивали", d: "Сцена, костюмы и награды" },
-];
-
-const coaches = [
-  { n: "Анна Соколова", r: "Полотна и кольцо", q: "Воздух учит доверять себе — это главный трюк." },
-  { n: "Мария Ветрова", r: "Гамак, детские группы", q: "Малыши летают смелее всех — нужно лишь подхватить." },
-  { n: "Екатерина Лебедева", r: "Трапеция и растяжка", q: "Сила и мягкость — не противоположности." },
 ];
 
 const awards = [
@@ -202,17 +198,17 @@ function Index() {
       {/* COACHES */}
       <section id="coaches" className="mx-auto max-w-7xl px-6 py-20 md:py-[120px]">
         <SectionTitle eyebrow="Тренеры" title="Те, кто научит летать" />
-        <div className="grid gap-6 md:grid-cols-3">
-          {coaches.map((c, i) => (
-            <FadeUp key={c.n} delay={i * 0.08}>
-              <div className="card-soft h-full bg-card p-10 text-center">
-                <div className={`mx-auto flex h-36 w-36 items-center justify-center rounded-full font-display text-5xl ${pastel[i]}`}>
-                  {c.n.split(" ").map((x) => x[0]).join("")}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {COACHES.map((c, i) => (
+            <FadeUp key={c.slug} delay={i * 0.08}>
+              <Link to="/coaches/$slug" params={{ slug: c.slug }} className="card-soft group block h-full overflow-hidden bg-card">
+                <img src={c.photo} alt={c.name} loading="lazy" width={960} height={1280} className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="p-6">
+                  <h3 className="text-2xl leading-tight">{c.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{c.short}</p>
+                  <span className="mt-4 inline-block text-sm underline underline-offset-4">Подробнее о тренере</span>
                 </div>
-                <h3 className="mt-6 text-3xl">{c.n}</h3>
-                <p className="mt-1 text-sm uppercase tracking-widest text-muted-foreground">{c.r}</p>
-                <p className="mt-5 font-display text-xl italic">«{c.q}»</p>
-              </div>
+              </Link>
             </FadeUp>
           ))}
         </div>
@@ -266,10 +262,7 @@ function Index() {
             <div className="card-soft h-full space-y-6 bg-card p-10">
               <p className="flex gap-3"><MapPin className="h-5 w-5 shrink-0" strokeWidth={1.5} /> Балашиха, ул. Заречная, 44</p>
               <a href="tel:89680139060" className="flex gap-3 text-2xl font-display hover:opacity-70"><Phone className="mt-1 h-5 w-5" strokeWidth={1.5} /> 8 (968) 013-90-60</a>
-              <div className="flex gap-3">
-                <a href="https://vk.com" target="_blank" rel="noreferrer" className="btn-ghost !py-2 text-sm">ВКонтакте</a>
-                <a href="https://max.ru" target="_blank" rel="noreferrer" className="btn-ghost !py-2 text-sm">МАКС</a>
-              </div>
+              <SocialIcons />
               <div className="rounded-[20px] bg-powder p-6">
                 <h3 className="flex items-center gap-2 text-2xl"><Bus className="h-5 w-5" strokeWidth={1.5} /> Как добраться</h3>
                 <p className="mt-3 text-muted-foreground">Маршрутки 8, 110, 2, 4, 6, 9 до остановки «Солнышко», далее 5 минут пешком.</p>
