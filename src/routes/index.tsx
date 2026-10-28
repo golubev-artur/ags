@@ -109,7 +109,7 @@ function Index() {
   return (
     <div className="overflow-x-clip">
       {/* NAV */}
-      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || open ? "bg-card/80 backdrop-blur-xl shadow-soft" : ""}`}>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${open ? "bg-card shadow-soft" : scrolled ? "bg-card/80 backdrop-blur-xl shadow-soft" : ""}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#top" className="font-display text-3xl tracking-wide">AirGS</a>
           <nav className="hidden gap-8 text-sm lg:flex">
