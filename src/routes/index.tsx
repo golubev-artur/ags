@@ -307,6 +307,10 @@ function Index() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
           <span className="font-display text-3xl text-foreground">AirGS</span>
           <span>Балашиха, ул. Заречная, 44 · <a href="tel:89680139060">8 (968) 013-90-60</a></span>
+          <a href={SOCIAL.vk} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-foreground">
+            <VkMark className="h-6 w-6" />
+            <span className="underline">ВКонтакте</span>
+          </a>
           <a href="/privacy" className="underline">Политика конфиденциальности</a>
           <span>© {new Date().getFullYear()} AirGS</span>
         </div>
